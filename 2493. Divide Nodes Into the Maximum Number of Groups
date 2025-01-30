@@ -1,0 +1,101 @@
+class Solution {
+public:
+
+//Yaha  par odd length cycle dekh le rha hun agar hai to easily false exact isbipartite code copy paste
+    bool isBipartite(unordered_map<int, vector<int>>& graph, int start, vector<int>& color) {
+        queue<int> q;
+        q.push(start);
+        color[start] = 1;
+
+        while (!q.empty()) {
+            int node = q.front();
+            q.pop();
+
+            for (int neighbor : graph[node]) {
+                if (color[neighbor] == -1) { 
+                    color[neighbor] = 1 - color[node];
+                    q.push(neighbor);
+                } 
+                else if (color[neighbor] == color[node]) { 
+                    return false; 
+                }
+            }
+        }
+        return true;
+    }
+    //yaha par depth calculate kar rha by increasing on traversing each level
+  int bfsMaxDepth(unordered_map<int, vector<int>>& graph, int start) {
+    queue<int> q;
+    unordered_set<int> visited; // Keep track of visited nodes
+    q.push(start);
+    visited.insert(start);
+
+    int maxDepth = 0;
+
+    while (!q.empty()) {
+        int size = q.size();
+        maxDepth++;  
+
+        for (int i = 0; i < size; i++) {
+            int node = q.front();
+            q.pop();
+
+            for (int neighbor : graph[node]) {
+                if (visited.find(neighbor) == visited.end()) {  
+                    visited.insert(neighbor);
+                    q.push(neighbor);
+                }
+            }
+        }
+    }
+    return maxDepth; 
+}
+
+    int magnificentSets(int n, vector<vector<int>>& edges) {
+        unordered_map<int, vector<int>> graph;
+
+        // Graph adjacency list
+        for (auto& edge : edges) {
+            graph[edge[0]].push_back(edge[1]);
+            graph[edge[1]].push_back(edge[0]);
+        }
+
+        vector<int> visited(n + 1, 0);
+        vector<int> color(n + 1, -1);  
+        int totalMaxDepth = 0;
+
+        for (int i = 1; i <= n; i++) {
+            if (!visited[i]) {
+                queue<int> q;
+                q.push(i);
+                visited[i] = 1;
+                vector<int> component;
+                component.push_back(i);
+
+                while (!q.empty()) {
+                    int node = q.front();
+                    q.pop();
+
+                    for (int neighbor : graph[node]) {
+                        if (!visited[neighbor]) {
+                            visited[neighbor] = 1;
+                            q.push(neighbor);
+                            component.push_back(neighbor);
+                        }
+                    }
+                }
+
+                // Check for odd-length cycle in this component
+                if (!isBipartite(graph, i, color)) {
+                    return -1;
+                }
+                int maxDepth = 0;
+                for (int node : component) {
+                    maxDepth = max(maxDepth, bfsMaxDepth(graph, node));
+                }
+                totalMaxDepth += maxDepth;
+            }
+        }
+        return totalMaxDepth;
+    }
+};
