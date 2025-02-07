@@ -1,0 +1,51 @@
+  vector<int> queryResults(int limit, vector<vector<int>>& queries) {
+        unordered_map<int,int>ball;
+        unordered_map<int,int>color;
+        vector<int>ans;
+        for(auto x:queries)
+        {
+            int genda=x[0];
+            int rang=x[1];
+            if(ball.find(genda)==ball.end())
+            {  
+            if(color.find(rang)==color.end())
+              { ball[genda]=rang;
+                color[rang]=1;
+                ans.push_back(color.size());
+              }
+              else if(color.find(rang)!=color.end())
+              {
+                    ball[genda]=rang;
+                    color[rang]+=1;
+                    ans.push_back(color.size());
+              }
+            }
+            //matlab genda pahle se hai
+            else{
+                //genda wahi hai but color nya hai
+                if(color.find(rang)==color.end())
+                {
+                    color[ball[genda]]--;
+                    if(color[ball[genda]]==0)  color.erase(ball[genda]);
+                    ball[genda]=rang;
+                    color[rang]=1;
+                    ans.push_back(color.size());
+                    
+                }
+                //matlab ball bhihai and color bhi hai pahle se hai
+                else if(color.find(rang)!=color.end())
+                {
+                    color[ball[genda]]--;
+                    if(color[ball[genda]]==0)
+                       color.erase(ball[genda]);
+                    ball[genda]=rang;
+                    color[rang]+=1;
+                    ans.push_back(color.size());   
+                }
+
+            }
+           
+        }
+        return ans;
+    }
+};
