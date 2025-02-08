@@ -1,0 +1,44 @@
+class NumberContainers {
+public:
+unordered_map<int,set<int>>mp;
+unordered_map<int,int>point;
+    NumberContainers() {
+        
+    }
+    
+    void change(int index, int number) {
+        if(mp.find(number)!=mp.end())
+        { 
+        if(point.find(index)==point.end())
+          { mp[number].insert(index);
+            point[index]=number;
+          }
+         else{
+             mp[point[index]].erase(index);
+             if(mp[point[index]].size()==0) mp.erase(point[index]);
+             point[index]=number;
+             mp[number].insert(index);
+            }
+        }
+        else if(mp.find(number)==mp.end())
+        {    
+        if(point.find(index)==point.end())
+          { mp[number].insert(index);
+            point[index]=number;
+          }
+          else{
+          mp[ point[index]].erase(index);
+        if(mp[point[index]].size()==0) mp.erase(point[index]);
+            point[index]=number;
+            mp[number].insert(index);
+          }
+
+        }
+    }
+    
+    int find(int number) {
+        if(mp.find(number)==mp.end())  return -1;
+        int firstElement = *(mp[number].begin());
+         return firstElement;
+    }
+};
