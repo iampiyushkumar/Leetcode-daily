@@ -1,0 +1,36 @@
+class Solution {
+public:
+ #define mod 1000000007;
+int getsum(int x)
+{
+    int sum=0;
+    while(x)
+   {
+    int digit=x%10;
+    digit=digit%mod;
+    sum+=digit;
+    sum=sum%mod;
+     x=x/10;
+   }
+   return sum;
+}
+    int maximumSum(vector<int>& nums) {
+        unordered_map<int,vector<int>>mp;
+        int maxi=-1;
+        for(auto x:nums)
+        {
+            mp[getsum(x)].push_back(x);
+        }
+        for(auto x:mp)
+        {
+            if(x.second.size()>=2)
+           { 
+            int val=0;
+            int n=x.second.size();
+            sort(x.second.begin(),x.second.end());
+            maxi=max(maxi,x.second[n-1]+x.second[n-2]);
+           }
+        }
+        return maxi;
+    }
+};
