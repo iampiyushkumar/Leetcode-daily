@@ -1,0 +1,43 @@
+string ans;
+void generate(string &pattern,string str,vector<bool>&used, int idx)
+{
+    if(idx>=pattern.size()&&ans.empty())
+     {
+          ans=str;
+          return;
+     }
+
+    for(int i=1;i<=9;i++)
+    {
+
+        if(idx==0&&str.empty())
+        {  used[i]=true;
+            generate(pattern,str+to_string(i),used,idx);
+            used[i]=false;
+            }
+
+        else if(used[i]==true||(pattern[idx]=='I'&&(str.back()-'0')>=i)) continue;
+
+          else  if(pattern[idx]=='I'&&(str.back()-'0')<i&&used[i]==false)
+         {   used[i]=true;
+            generate(pattern,str+to_string(i),used,idx+1);
+              used[i]=false;
+         }
+
+             else if((used[i]==true||pattern[idx]=='D'&&(str.back()-'0')<=i))continue;
+
+            else if(pattern[idx]=='D'&&(str.back()-'0')>i&&used[i]==false)
+           { used[i]=true;
+            generate(pattern,str+to_string(i),used,idx+1);
+              used[i]=false;
+           }
+
+        
+    }
+}
+    string smallestNumber(string pattern) {
+        vector<bool>used(10,false);
+        generate(pattern,"",used,0);
+        return ans;
+    }
+};
