@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<int> pivotArray(vector<int>& arr, int pivot) {
+     vector<int>chhota;
+     vector<int>equal;
+     vector<int>bda;
+     for(auto x:arr)
+     {
+        if(x<pivot)
+        chhota.push_back(x);
+        else if(x==pivot)
+        equal.push_back(x);
+        else
+        bda.push_back(x);
+     }
+     vector<int>res;
+     for(auto x:chhota)
+     res.push_back(x);
+     for(auto x:equal)
+     res.push_back(x);
+     for(auto x:bda)
+     res.push_back(x);
+     return res;
+
+    }
+};
