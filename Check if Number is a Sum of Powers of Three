@@ -1,0 +1,21 @@
+class Solution {
+public:
+//we can also think of recursion here
+bool solve(int tar, int exp)
+{
+    if(tar==0)
+     return true;
+     
+    if(tar<0||exp<0)
+    return false;
+ 
+   int num=pow(3,exp);
+   
+   return solve(tar-num,exp-1)||solve(tar,exp-1);
+   
+    
+}
+    bool checkPowersOfThree(int n) {
+        return solve(n,16);
+    }
+};
