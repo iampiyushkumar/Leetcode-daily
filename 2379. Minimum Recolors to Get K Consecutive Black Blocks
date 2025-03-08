@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int minimumRecolors(string blocks, int k) {
+        int n=blocks.size();
+       int cnt=0;
+       int left=0;
+       int maxcnt=0;
+       if(k>n) return 0;
+       for(int i=0;i<k;i++)
+       {
+          if(blocks[i]=='B')  cnt++;
+          maxcnt=max(maxcnt,cnt);
+       }
+       for(int i=k;i<n;i++)
+       {
+           if(blocks[i]=='B')  cnt++;
+           if(blocks[left]=='B')
+           {
+            cnt--;
+           }
+           left++;
+           maxcnt=max(maxcnt,cnt);
+       }
+       return k-maxcnt;
+    }
+};
