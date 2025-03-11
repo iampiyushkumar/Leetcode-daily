@@ -1,0 +1,25 @@
+class Solution {
+public:
+bool isabc(vector<int>&freq)
+{
+    return (freq['a'-'a']>0&&freq['b'-'a']>0&&freq['c'-'a']>0);
+}
+    int numberOfSubstrings(string s) {
+        int n=s.size();
+        int l=0;
+        int ans=0;
+        vector<int>freq(26);
+        for(int r=0;r<n;r++)
+        {   char ch=s[r];
+            freq[ch-'a']++;
+            while(isabc(freq))
+            {
+                ans+=(n-r);
+                freq[s[l]-'a']--;
+                l++;
+            }
+        }
+        return ans;
+
+    }
+};
