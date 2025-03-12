@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int maximumCount(vector<int>& nums) {
+        int pcnt=0;
+        int ncnt=0;
+        for(auto x:nums)
+        {
+            if(x>0) pcnt++;
+            else if(x<0) ncnt++;
+        }
+        return max(pcnt,ncnt);
+    }
+};
