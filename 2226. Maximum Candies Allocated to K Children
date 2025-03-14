@@ -1,0 +1,31 @@
+class Solution {
+public:
+bool possible(vector<int>&candies,long long mid, long long k)
+{
+    long long cnt=0;
+    for(int i=0;i<candies.size();i++)
+    {   if(mid)
+       cnt+=(candies[i]/mid);
+    }
+    if(cnt>=k) return true;
+    return false;
+}
+    int maximumCandies(vector<int>& candies, long long k) {
+        int n=candies.size();
+        int start=1;
+        int end=*max_element(candies.begin(),candies.end());
+        int res=0;
+        while(start<=end)
+        {
+            int mid=start+(end-start)/2;
+            if(possible(candies,mid,k))
+             {
+                res=mid;
+                start=mid+1;
+             }
+             else
+             end=mid-1;
+        }
+        return res;
+    }
+};
