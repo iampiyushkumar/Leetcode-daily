@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool possible(vector<int>& ranks, long long time, long long cars) {
+        long long cnt = 0;
+        for (auto x : ranks) {
+            cnt += sqrt(time / x);
+        }
+        return cnt >= cars;
+    }
+    long long repairCars(vector<int>& ranks, int cars) {
+
+        long long start = 0;
+        long long end= *min_element(ranks.begin(), ranks.end())*1LL*cars*cars;
+        long long res = 0;
+        while (start <= end) {
+        long long mid = start + (end - start) / 2;
+            if (possible(ranks, mid, cars)) {
+                res = mid;
+                end = mid - 1;
+            } else
+                start = mid + 1;
+        }
+        return res;
+    }
+};
+/*
+time=cars*cars *rank
+cars=sqrt(time/rank)
+*/
