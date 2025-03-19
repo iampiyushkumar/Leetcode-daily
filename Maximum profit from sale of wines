@@ -1,0 +1,51 @@
+//Question Link    https://www.geeksforgeeks.org/maximum-profit-sale-wines/ 
+
+#include<bits/stdc++.h>
+using namespace std;
+int n;
+int dp[101][101];
+int sell[101][101];
+int find(int i, int j, vector<int>& v, int n) {
+    if(dp[i][j]!=-1)
+    return dp[i][j];
+    int t=n-(j-i);
+    if (i== j)
+        return t*v[i];
+
+    int first = t * v[i] + find(i + 1, j, v,n);
+    int last = t * v[j] + find(i, j - 1, v, n);
+    
+    
+    if(first>=last)
+    sell[i][j]=0;
+    else
+    sell[i][j]=1;
+    return dp[i][j]=max(first, last);
+}
+
+int main() {
+    cin >> n;
+    vector<int> v(n); // Corrected vector initialization
+
+    for (int i = 0; i < n; i++) {
+        cin >> v[i];  // Correctly storing values in the vector
+    }
+   memset(dp,-1,sizeof(dp));
+    cout << find(0, n - 1, v, n) << endl;
+    
+    int i=0;
+    int j=n-1;
+    while(i<=j)
+    {
+        if(sell[i][j]==0)
+        {
+            cout<<"beg"<<" ";
+            i++;
+        }
+        else{
+            cout<<"end"<<" ";
+            j--;
+        }
+    }
+    return 0;
+}
