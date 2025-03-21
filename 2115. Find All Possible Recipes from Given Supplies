@@ -1,0 +1,39 @@
+class Solution {
+public:
+  
+    vector<string> findAllRecipes(vector<string>& rcp,
+                                  vector<vector<string>>& ing,
+                                  vector<string>& sup) {
+         unordered_map<string, int> indegree;
+        unordered_map<string, vector<string>> graph;
+        
+        for (int i = 0; i < rcp.size(); i++) {
+            for (const string& ingredient : ing[i]) {
+                graph[ingredient].push_back(rcp[i]);
+                indegree[rcp[i]]++; 
+            }
+        }
+        for(auto x:indegree)
+        cout<<x.first<<"->"<<x.second<<endl;
+
+        queue<string> q;
+        unordered_set<string> supply(sup.begin(), sup.end());
+        for (const string& s : sup) q.push(s);
+
+        vector<string> ans;
+        while (!q.empty()) {
+            string curr = q.front();
+            q.pop();
+            
+            if (find(rcp.begin(), rcp.end(), curr) != rcp.end())
+               ans.push_back(curr); 
+            
+            for (const string& neigh : graph[curr]) {
+                indegree[neigh]--;
+                if (indegree[neigh] == 0) q.push(neigh);
+            }
+        }
+   
+        return ans;
+    }
+};
