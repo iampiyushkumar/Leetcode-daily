@@ -1,0 +1,47 @@
+class Solution {
+public:
+long long mod = (long long)(1e9 + 7);
+ unordered_map<long long, vector<pair<long long, long long>>> mp;
+ long long find(int sr,int n)
+ {
+    vector<long long>ways(n,0);
+    ways[0]=1;
+    vector<long long>waqt(n,1e18);
+priority_queue<pair<long long,long long>,vector<pair<long long,long long>>,greater<pair<long long,long long>>>pq;
+    pq.push({0,0});
+   
+     waqt[0] = 0;
+    while(!pq.empty())
+    {
+      long long t=pq.top().first;
+      int node=pq.top().second;
+         pq.pop();
+      for(auto x:mp[node])
+      {
+        long long nextNode = x.first;
+                long long travelTime = x.second;
+
+                if (waqt[nextNode] > t + travelTime) {
+                    waqt[nextNode] = t + travelTime;
+                    ways[nextNode] = ways[node];
+                    pq.push({waqt[nextNode], nextNode});
+                } 
+                else if (waqt[nextNode] == t + travelTime) {
+                    ways[nextNode] = (ways[nextNode] + ways[node]) % mod;
+            
+                }
+      }
+
+    }
+    return ways[n-1];
+ }
+    int countPaths(int n, vector<vector<int>>& roads) { 
+        for(auto x:roads)
+          {
+            mp[x[0]].push_back({x[1],x[2]});
+            mp[x[1]].push_back({x[0],x[2]});
+          }
+    return   find(0,n);
+       
+    }
+};
