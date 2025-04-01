@@ -1,0 +1,19 @@
+class Solution {
+public:
+long long dp[100001];
+long  long find(vector<vector<int>>&ques,long long idx)
+{   
+    if(idx>=ques.size())
+    return 0;
+ if(dp[idx]!=-1)
+  return dp[idx];
+
+    long long take=ques[idx][0]+find(ques,idx+ques[idx][1]+1);
+    long long nottake=find(ques,idx+1);
+    return dp[idx]= max(take,nottake);
+}
+    long long mostPoints(vector<vector<int>>& questions) {
+        memset(dp,-1,sizeof(dp));
+        return find(questions,0);
+    }
+};
