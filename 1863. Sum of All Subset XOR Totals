@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int subsetXORSum(vector<int>& nums) {
+        //here we see that if we do or of all terms of nums and then left shift it by nums.size()-1 then we got desired answer of this question
+        int value=0;
+        for(auto x:nums)
+         { 
+          value=value|x;
+         }
+         value=value<<(nums.size()-1);
+         return value;
+    }
+};
+/*
+0 1
+1 1
+1 1
+110*/
