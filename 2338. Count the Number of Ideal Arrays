@@ -1,0 +1,69 @@
+class Solution {
+public:
+const int mod=1e9+7;
+int findPower(long long a, long long b)
+{
+    if(b==0)
+    return 1;
+    long long half=findPower(a,b/2);
+    long long result=(half*half)%mod;
+    if(b%2==1)
+    result=(result*a)%mod;
+
+    return result;
+
+}
+int modularncr(int n,int r,vector<long long>&fact)
+{
+    if(r<0||r>n) return 0;
+
+    long long b=(fact[r]*fact[n-r])%mod;
+    return (fact[n]*findPower(b,mod-2))%mod;
+}
+void findset(int m,vector<int>&count,vector<vector<int>>&dp){
+
+    if(dp[m][1]!=0)
+    return;
+
+    dp[m][1]=1;
+    count[1]++;
+    for(int div=2;div<=m;div++){
+        if(m%div==0)
+        {
+            findset(m/div,count,dp);
+            for(int len=1;len<15;len++){
+                if(dp[m/div][len]!=0){
+                      dp[m][len+1]+=dp[m/div][len];
+                count[len+1]+=dp[m/div][len];
+                }
+             
+            }
+        }
+    }
+}
+    int idealArrays(int n, int maxval) {
+        vector<vector<int>>dp(maxval+1,vector<int>(15,0));
+        vector<int>count(15,0);
+
+        for(int val=1;val<=maxval;val++)
+        {
+            findset(val,count,dp);
+        }
+        vector<long long>fact(n+1,1);
+        for(int i=2;i<=n;i++)
+        {
+            fact[i]=(fact[i-1]*i)%mod;
+        }
+        long long result=0;
+        for(int len=1;len<15;len++)
+        {
+            if(n<len) break;
+            if(count[len]!=0){
+                long long possibilities=modularncr(n-1,len-1,fact)%mod;
+            result=(result+(count[len]*possibilities)%mod)%mod;
+            }
+           
+        }
+        return (int)result;
+    }
+};
