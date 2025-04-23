@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int countLargestGroup(int n) {
+        unordered_map<int,int>mp;
+        int maxcnt=0;
+      for (int x = 1; x <= n; x++) {
+        int sum = 0, temp = x;
+        while (temp > 0) {
+            sum += temp % 10;
+            temp /= 10;
+        }
+        mp[sum]++;
+        maxcnt = max(maxcnt, mp[sum]);
+    }
+        int cnt=0;
+        for(auto x:mp)
+        {
+            if(x.second==maxcnt) cnt++;
+        }
+        return cnt;
+       
+    }
+};
