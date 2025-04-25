@@ -1,0 +1,20 @@
+class Solution {
+public:
+    long long countInterestingSubarrays(vector<int>& nums, int mod, int k) {
+        int n = nums.size();
+        vector<long long> prefix(n + 1, 0);
+        unordered_map<long long, long long> mp;
+        mp[0] = 1;
+        long long cnt = 0;
+        for (int i = 0; i < n; i++) {
+            prefix[i + 1] = (prefix[i]) + (nums[i] % mod == k ? 1 : 0);
+
+         long long target = (prefix[i + 1] - k+mod) % mod;
+            cnt += mp[target];
+             cout<<"prefix(i+1)"<<" "<<prefix[i+1]<<" "<<target<<" "<<cnt<<" "<<(prefix[i+1]%mod)<<endl;
+            mp[prefix[i + 1]%mod]++;
+            
+        }
+        return cnt;
+    }
+};
