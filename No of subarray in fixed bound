@@ -1,0 +1,23 @@
+class Solution {
+public:
+    long long countSubarrays(vector<int>& nums, int minK, int maxK) {
+        long long cnt = 0;
+        long long criminal = -1;
+        long long mini = -1;
+        long long maxi = -1;
+        for (int i = 0; i < nums.size(); i++) {
+
+            if (nums[i] > maxK || nums[i] < minK)
+                criminal = i;
+
+            if (nums[i] == minK)
+                mini = i;
+            if (nums[i] == maxK)
+                maxi = i;
+
+            long long t = min(mini, maxi);
+            cnt += (t - criminal) < 0 ? 0 : (t - criminal);
+        }
+        return cnt;
+    }
+};
