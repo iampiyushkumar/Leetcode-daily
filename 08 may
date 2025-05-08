@@ -1,0 +1,54 @@
+class Solution {
+public:
+ int rows[4] = {-1, 1, 0, 0};
+    int cols[4] = {0, 0, -1, 1};
+    int n, m;
+
+    bool valid(int i, int j) {
+        return i >= 0 && j >= 0 && i < n && j < m;
+    }
+
+    int minTimeToReach(vector<vector<int>>& moveTime) {
+        n = moveTime.size();
+        m = moveTime[0].size();
+
+        // visited[x][y][parity]
+        vector<vector<vector<int>>> visited(n, vector<vector<int>>(m, vector<int>(2, INT_MAX)));
+
+        // priority_queue: (time, x, y, moveCount)
+        using T = tuple<int, int, int, int>;
+        priority_queue<T, vector<T>, greater<T>> pq;
+        pq.push({0, 0, 0, 0});
+        visited[0][0][0] = 0;
+
+        while (!pq.empty()) {
+            auto [time, x, y, moveCount] = pq.top();
+            pq.pop();
+
+            if (x == n - 1 && y == m - 1) return time;
+
+            int moveDuration = (moveCount % 2 == 0) ? 1 : 2;
+
+            for (int k = 0; k < 4; ++k) {
+                int nx = x + rows[k];
+                int ny = y + cols[k];
+
+                if (valid(nx, ny)) {
+                    int nextMoveCount = moveCount + 1;
+                    int parity = nextMoveCount % 2;
+
+                    // wait if needed, then move
+                    int earliestStart = max(time, moveTime[nx][ny]);
+                    int arrivalTime = earliestStart + moveDuration;
+
+                    if (visited[nx][ny][parity] > arrivalTime) {
+                        visited[nx][ny][parity] = arrivalTime;
+                        pq.push({arrivalTime, nx, ny, nextMoveCount});
+                    }
+                }
+            }
+        }
+
+        return -1;
+    }
+};
