@@ -1,0 +1,61 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n;
+    cin>>n;
+    cin.ignore();
+    int mini=20;
+    vector<string>v(n);
+    for(int i=0;i<n;i++)
+    {
+        string input;
+        getline(cin,input);
+        stringstream ss(input);
+        string token;
+        vector<string>st;
+        while(ss>>token)
+        {
+            st.push_back(token);
+        }
+       string temp; 
+      for(auto x:st)
+      {
+        temp+=x;   
+      }
+      v[i]=temp;
+    //cout<<v[i]<<endl;
+    // mini=min(mini,(int)temp.size());
+    }
+ 
+    for(auto x:v)
+    {    if(!x.empty()&&(int)x.size()<mini)
+        { mini=(int)x.size();
+        }
+    }
+ string str;
+for(int i=mini;i>0;i--)
+{
+   bool match=true;
+   for(int j=1;j<n;j++)
+   {
+       if(v[j].substr(0,i)==v[j-1].substr(0,i))
+       {
+           str=v[j].substr(0,i);
+           
+       }
+       else{
+           match=false;
+           break;
+       }
+   }
+   if(match)
+   {
+       cout<<str;
+       return 0;
+   }
+}
+  
+   
+    
+}
