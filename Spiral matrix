@@ -1,0 +1,57 @@
+vector<int>spiralOrder(vector<vector<int>>& matrix) {
+        int n=matrix.size();
+        int m=matrix[0].size();
+        int upper=0;
+        int lower=n-1;
+        int left=0;
+        int right=m-1;
+        vector<int>ans;
+        while(upper<=lower||left<=right)
+        {
+            if(upper<=lower){
+        for(int j=left;j<=right;j++)
+           {
+            cout<<"1chal rha"<<endl;
+            ans.push_back(matrix[upper][j]);
+           } 
+            upper++;
+            }
+           if(left<=right){
+                  for(int i=upper;i<=lower;i++)
+            {
+               cout<<"2chal rha"<<endl;
+               ans.push_back(matrix[i][right]);
+            }
+            right--;
+           }
+           
+           if(upper<=lower){
+                 for(int j=right;j>=left;j--)
+            {
+              cout<<"3chal rha"<<endl;
+             ans.push_back(matrix[lower][j]);
+            }
+            lower--;
+           }
+           
+
+
+           if(left<=right){
+                for(int i=lower;i>=upper;i--)
+            {
+                 cout<<"4chal rha"<<endl;
+                  ans.push_back(matrix[i][left]);
+            }
+            left++;
+           }
+            
+        }
+        return ans;
+    }
+};
+/*
+upper=0    1    2
+lower=2    1
+ left=0    1
+right=3    2    
+*/
