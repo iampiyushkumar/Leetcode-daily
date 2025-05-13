@@ -1,0 +1,33 @@
+class Solution {
+public:
+const int mod=1e9+7;
+    int lengthAfterTransformations(string s, int t) {
+        int cnt=0;
+       vector<int>freq(26,0);
+       for(auto x:s)
+       freq[x-'a']++;
+       for(int step=0;step<t;step++)
+       {
+        vector<int>newfreq(26,0);
+        for(int i=0;i<26;i++)
+         {
+            if(i==25)
+            {
+                newfreq[0]=(newfreq[0]+freq[25])%mod;
+                newfreq[1]=(newfreq[1]+freq[25])%mod;
+
+            }
+            else
+            {
+                newfreq[i+1]=(newfreq[i+1]+freq[i])%mod;
+            }
+            
+         }
+         freq=newfreq;
+       }
+
+       for(auto x:freq)
+       cnt=(cnt+x)%mod;
+       return cnt;
+    }
+};
