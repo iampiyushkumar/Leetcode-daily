@@ -1,0 +1,64 @@
+class Solution {
+public:
+ int countnodes(unordered_map<int,vector<int>>&adj, int start, int k, int size) {
+        vector<bool> visited(size, false);
+        queue<int> queue;
+        queue.push(start);
+        visited[start] = true;
+        int cnt = 0, dist = 0;
+
+        while (!queue.empty() && dist <= k) {
+            int sz = queue.size();
+            while (sz-- > 0) {
+                int node = queue.front();
+                queue.pop();
+                cnt++;
+                for (auto ne : adj[node]) {
+                    if (!visited[ne]) {
+                        visited[ne] = true;
+                        queue.push(ne);
+                    }
+                }
+            }
+            dist++;
+        }
+        return cnt;
+    }
+    vector<int> maxTargetNodes(vector<vector<int>>& edges1, vector<vector<int>>& edges2, int k) {
+        int n=edges1.size();
+        int m=edges2.size();
+        vector<int>ans(n+1,0);
+        unordered_map<int,vector<int>>grid1;
+        for(auto x:edges1)
+        {
+            int u=x[0];
+            int v=x[1];
+            grid1[u].push_back(v);
+            grid1[v].push_back(u);
+        }
+        unordered_map<int,vector<int>>grid2;
+        for(auto x:edges2)
+        {
+            int u=x[0];
+            int v=x[1];
+            grid2[u].push_back(v);
+            grid2[v].push_back(u);
+        }
+        for(int i=0;i<=n;i++)
+        {
+            ans[i]=countnodes(grid1,i,k,n+1);
+        }
+        int greedynodescnt=0;
+        
+        for(int i=0;i<=m;i++)
+        {
+           int count=countnodes(grid2,i,k-1,m+1);
+           if(count>greedynodescnt)
+             greedynodescnt=count;
+        }
+        for(int i=0;i<=n;i++)
+        ans[i]=ans[i]+greedynodescnt;
+        return ans;
+
+    }
+};
