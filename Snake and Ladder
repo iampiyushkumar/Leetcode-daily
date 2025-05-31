@@ -1,0 +1,46 @@
+class Solution {
+public:
+vector<int> findcoordinates(int next, int n) {
+        int row = n - 1 - (next - 1) / n;
+    int col = (next - 1) % n;
+    if ((n - row) % 2 == 0) {
+        col = n - 1 - col;
+    }
+    return {row,col};
+    }
+    int snakesAndLadders(vector<vector<int>>& board) {
+        int n=board.size();
+        queue<int>q;
+        q.push(1);
+        vector<vector<bool>>visited(n,vector<bool>(n,false));
+        visited[n-1][0]=true;
+        int steps=0;
+        
+        while(!q.empty())
+        {
+           int k=q.size();
+           while(k--)
+           {
+               int curval=q.front();
+               q.pop();
+              if(curval==(n*n)) return steps;
+             for(int dice=1;dice<=6;dice++)
+             {
+                if((curval+dice)>(n*n)) continue;
+                 vector<int>corrd=findcoordinates(curval+dice,n);
+               int r=corrd[0];
+               int c=corrd[1];
+               if(visited[r][c]==true)continue;
+               visited[r][c]=true;
+               if(board[r][c]==-1)
+                q.push(curval+dice);
+                else
+                q.push(board[r][c]);  
+             }
+           }
+           steps++;
+
+        }
+        return -1;
+    }
+};
