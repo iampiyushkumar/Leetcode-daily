@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int maxCandies(vector<int>& status, vector<int>& candies,
+                   vector<vector<int>>& keys,
+                   vector<vector<int>>& containedBoxes,
+                   vector<int>& initialBoxes) {
+        int n = status.size();
+        vector<bool> baksa(n, false);
+        for (auto x : initialBoxes) {
+            baksa[x] = true;
+        }
+        int candy = 0;
+        queue<int> q;
+        vector<bool> visited(n, false);
+        for (auto x : initialBoxes) {
+            if (status[x] == 1 && baksa[x]) {
+                q.push(x);
+                visited[x] = true;
+            }
+        }
+        while (!q.empty()) {
+            int box = q.front();
+            q.pop();
+            candy += candies[box];
+
+            for (auto x : keys[box]) {
+                status[x] = 1;
+                if (baksa[x] && visited[x] == 0) {
+                    q.push(x);
+                    visited[x] = 1;
+                }
+            }
+            for (auto x : containedBoxes[box]) {
+                baksa[x] = true;
+                if (visited[x] == 0 && status[x] == 1) {
+                    q.push(x);
+                    visited[x] = true;
+                }
+            }
+        }
+        return candy;
+    }
+};
