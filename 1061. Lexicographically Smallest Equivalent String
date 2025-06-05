@@ -1,0 +1,40 @@
+class Solution {
+public:
+char find(unordered_map<int,vector<int>>&adj, int node)
+{
+    queue<int>q;
+    q.push(node);
+    int mini=INT_MAX;
+    unordered_set<int>visited;
+    visited.insert(node);
+    while(!q.empty())
+    {
+        int curr=q.front();
+        mini=min(mini,curr);
+        q.pop();
+        for(auto x:adj[curr])
+       {
+        if(visited.find(x)==visited.end())
+        {
+            q.push(x);
+            visited.insert(x);
+        }
+       }
+    }
+    return char(mini);
+}
+    string smallestEquivalentString(string s1, string s2, string baseStr) {
+        unordered_map<int,vector<int>>adj;
+        for(int i=0;i<s1.size();i++)
+        {
+            adj[s1[i]].push_back(s2[i]);
+            adj[s2[i]].push_back(s1[i]);
+        }
+        string ans="";
+        for(auto x:baseStr)
+        {   int num=x;
+            ans+=find(adj,num);
+        }
+        return ans;
+    }
+};
