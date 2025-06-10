@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int maxDifference(string s) {
+      unordered_map<int,int>mp;
+      for(auto x:s)
+      {
+        mp[x]++;
+      }
+      int odd=0,even=INT_MAX;
+      for(auto x:mp)
+      {
+        if(x.second%2==1) odd=max(odd,x.second);
+        else  even=min(even,x.second);
+      }
+      return (odd-even);
+    }
+};
