@@ -1,0 +1,22 @@
+class Solution {
+public:
+    string mapping(string str, char ch) {
+        for (int i = 0; i < str.size(); i++) {
+            if (str[i] != ch) {
+                char old = str[i];
+                for (int j = i; j < str.size(); j++) {
+                    if (str[j] == old)
+                        str[j] = ch;
+                }
+                break;
+            }
+        }
+
+        return str;
+    }
+    int minMaxDifference(int num) {
+        int num1 = stoi(mapping(to_string(num), '9'));
+        int num2 = stoi(mapping(to_string(num), '0'));
+        return num1 - num2;
+    }
+};
