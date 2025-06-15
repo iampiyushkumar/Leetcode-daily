@@ -1,0 +1,51 @@
+class Solution {
+public:
+int findmaxi(string str, char ch)
+{
+   int n=str.size();
+   int k=0;
+   while(k<n&&str[k]=='9') k++;
+  char old=str[k];
+  for(int i=k;i<n;i++)
+  {
+    if(old==str[i])
+    {
+        str[i]='9';
+    }
+  }
+  return stoi(str);
+}
+int findmini(string str)
+{   int n=str.size();
+    int k=0;
+    while(k<n&&(str[k]=='1'||str[k]=='0')) k++;
+    if(k==0)
+    {
+        char old=str[k];
+        for(int i=k;i<n;i++)
+        {
+            if(old==str[i])
+            {
+                str[i]='1';
+            }
+        }
+    }
+    else{
+            char old=str[k];
+            for(int i=k;i<n;i++)
+            {
+                if(old==str[i])
+                {
+                    str[i]='0';
+                }
+            }
+    }
+    return stoi(str);
+}
+    int maxDiff(int num) {
+       int maxi=findmaxi(to_string(num),'9');
+       int mini=findmini(to_string(num));
+      cout<<maxi<<" "<<mini;
+       return maxi-mini;
+    }
+};
