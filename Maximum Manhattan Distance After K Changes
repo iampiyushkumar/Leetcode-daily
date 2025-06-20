@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int maxDistance(string str, int k) {
+        int n = 0, s = 0, e = 0, w = 0;
+        int area = 0;
+        // cout<<'N'<<" "<<'S'<<" "<<'E'<<" "<<'W'<<endl;
+        for (auto x : str) {
+            if (x == 'N')
+                n++;
+            if (x == 'S')
+                s++;
+            if (x == 'E')
+                e++;
+            if (x == 'W')
+                w++;
+
+            int maxx = max(e, w);
+            int minx = min(e, w);
+            int maxy = max(n, s);
+            int miny = min(n, s);
+            int temp = (maxx - minx) + (maxy - miny) +
+                       2 * min(min(n, s) + min(e, w), k);
+            if (temp > area) {
+                // cout<<n<<" "<<s<<" "<<e<<" "<<w<<endl;
+                area = temp;
+            }
+        }
+        return area;
+    }
+};
