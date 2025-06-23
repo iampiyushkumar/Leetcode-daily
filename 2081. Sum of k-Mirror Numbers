@@ -1,0 +1,55 @@
+class Solution {
+public:
+bool ispallindrome(string s)
+{
+    int start=0;
+    int end=s.size()-1;
+    while(start<=end)
+    {
+        if(s[start]!=s[end]) return false;
+        else{
+            start++;
+            end--;
+        }
+    }
+    return true;
+}
+bool basemeconvert(long long num, int k)
+{
+    string s="";
+    while(num>0)
+    {
+        s+=to_string(num%k);
+        num=num/k;
+    }
+     reverse(s.begin(), s.end());
+    if(ispallindrome(s))
+    return true;
+    return false;
+}
+
+    long long kMirror(int k,  int n) {
+      long long sum = 0;
+        int count = 0;
+
+        for (int len = 1; count < n; ++len) {
+            int start = pow(10, (len - 1) / 2);
+            int end = pow(10, (len + 1) / 2);
+
+            for (int half = start; half < end && count < n; ++half) {
+                string s = to_string(half);
+                string rev = s;
+                if (len % 2) rev.pop_back();  
+                reverse(rev.begin(), rev.end());
+                string full = s + rev;
+                long long num = stoll(full);
+
+                if (basemeconvert(num, k)) {
+                    sum += num;
+                    count++;
+                }
+            }
+        }
+        return sum;
+    }
+};
