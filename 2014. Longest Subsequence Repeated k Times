@@ -1,0 +1,44 @@
+class Solution {
+public:
+bool isktimes(string chota,string &s,int k)
+{
+    int i=0;
+    int count=0;
+    for(auto x:s)
+    {
+        if(x==chota[i]){
+            i++;
+            if(i==chota.size())
+             {
+                i=0;
+                count++;
+             }
+        }
+        if(count==k)
+        return true;
+        
+
+    }
+    return false;
+}
+    string longestSubsequenceRepeatedK(string s, int k) {
+        int n=s.size();
+        queue<string>q;
+        q.push("");
+        string res="";
+        while(!q.empty())
+        {
+         string curr=q.front();
+         q.pop();
+         for(char ch='a';ch<='z';ch++)
+         {
+            if(isktimes(curr+ch,s,k))
+            {
+                q.push(curr+ch);
+                res=curr+ch;
+            }
+         }
+        }
+        return res;
+    }
+};
