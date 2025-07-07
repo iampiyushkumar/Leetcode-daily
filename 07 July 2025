@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int maxEvents(vector<vector<int>>& events) {
+       sort(events.begin(),events.end());
+       int n=events.size();
+       multiset<int>q;
+       int cnt=0;
+       int i=0;
+       for(int d=1;d<=100001;d++)
+       {
+          while(!q.empty()&&*q.begin()<d)
+               q.erase(q.begin());
+          while(i<n&&events[i][0]==d)
+          {
+             q.insert(events[i][1]);
+             i++;
+          }
+          if(!q.empty()&&*q.begin()>=d)
+          {
+                  cnt++;
+                  q.erase(q.begin());
+          }
+       }
+       return cnt;
+    }
+};
