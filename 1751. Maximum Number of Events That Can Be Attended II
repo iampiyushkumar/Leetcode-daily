@@ -1,0 +1,42 @@
+class Solution {
+public:
+
+int aaglafind(vector<vector<int>>&events,int start,int target)
+{
+    
+    int end=events.size()-1;
+    int ans=events.size();
+    while(start<=end)
+    {
+        int mid=start+(end-start)/2;
+        if(events[mid][0]>target)
+        {
+            ans=mid;
+            end=mid-1;
+        }
+        else
+        start=mid+1;
+    }
+    return ans;
+    
+}
+int find(vector<vector<int>>&events,int idx ,int k,vector<vector<int>>&dp)
+{
+   if(idx>=events.size()||k<=0)
+   return 0;
+
+if(dp[idx][k]!=-1)
+return dp[idx][k];
+    int aagla=aaglafind(events,idx+1,events[idx][1]);
+     int take = events[idx][2] + find(events, aagla, k - 1,dp);
+    int nottake=find(events,idx+1,k,dp);
+    return dp[idx][k]= max(take,nottake);
+
+}
+    int maxValue(vector<vector<int>>& events, int k) {
+        sort(events.begin(),events.end());
+        int n=events.size();
+         vector<vector<int>> dp(n, vector<int>(k + 1, -1));
+        return find(events,0,k,dp);
+    }
+};
