@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int mostBooked(int n, vector<vector<int>>& meetings) {
+        sort(meetings.begin(),meetings.end());
+        vector<long long>availableroom(n,0);
+        vector<long long>countroom(n,0);
+        
+        for(auto meet:meetings){
+           long long start=meet[0];
+            long long end=meet[1];
+            long long duration=end-start;
+            bool found=false;
+            long long firstroom=0;
+            long long firstavailable=LLONG_MAX;
+            for(int room=0;room<n;room++)
+            {
+                if(start>=availableroom[room]){
+                    found=true;
+                    availableroom[room]=end;
+                    countroom[room]++;
+                    break;
+                }
+                if(firstavailable>availableroom[room])
+                 {
+                    firstavailable=availableroom[room];
+                    firstroom=room;
+                 }
+                
+            }
+            if(found==false){
+                availableroom[firstroom]+=duration;
+                countroom[firstroom]++;
+            }
+        }
+      //  for(auto x:countroom)
+      //  cout<<x<<" ";
+    int idx= max_element(countroom.begin(),countroom.end())-countroom.begin();
+    return idx;
+    }
+};
