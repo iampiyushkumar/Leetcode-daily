@@ -5,6 +5,7 @@ public:
        int n=events.size();
        multiset<int>q;
        int cnt=0;
+
        int i=0;
        for(int d=1;d<=100001;d++)
        {
