@@ -1,0 +1,18 @@
+
+    int maximumLength(vector<int>& nums) {
+        int oddcnt=0,evencnt=0;
+        for(auto x:nums){
+            if(x%2==0) evencnt++;
+            else oddcnt++;
+        }
+
+        int odd=0,even=0;
+        for(auto x:nums){
+            if(x%2==0)
+            even=max(even,odd+1);
+            else
+            odd=max(odd,even+1);
+        }
+        return max({oddcnt,evencnt,even,odd});
+    }
+};
