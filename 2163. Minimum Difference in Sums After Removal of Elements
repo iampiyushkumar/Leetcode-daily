@@ -1,0 +1,43 @@
+class Solution {
+public:
+    long long minimumDifference(vector<int>& nums) {
+        int n=nums.size();
+        int k=n/3;
+   vector<long long>suffix(n,LLONG_MIN);
+       priority_queue<int,vector<int>,greater<int>>mini;
+       long long sum=0;
+       for(int i=n-1;i>=(n/3);i--)
+       {
+         int val=nums[i];
+         sum+=val;
+         mini.push(val);
+         if(mini.size()>k)
+         {
+              int topi=mini.top();
+              sum-=topi;
+              mini.pop();
+         }
+         if(mini.size()==k){
+            suffix[i]=sum;
+         }
+       }
+sum=0;
+long long res=LLONG_MAX;
+       priority_queue<int>maxi;
+       for(int i=0;i<(2*k);i++)
+       {
+        int val=nums[i];
+        sum+=val;
+        maxi.push(val);
+        if(maxi.size()>k){
+            int topi=maxi.top();
+            sum-=topi;
+            maxi.pop();
+        }
+        if(maxi.size()==k&&suffix[i+1]!=LLONG_MIN){
+          res=min(res,sum-suffix[i+1]);
+        }
+       }
+       return res;
+    }
+};
