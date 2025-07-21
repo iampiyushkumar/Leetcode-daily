@@ -41,7 +41,6 @@ TreeNode*lca(TreeNode*root,TreeNode*p,TreeNode*q)
             if (node->right) q.push(node->right);
         }
     }
-    
     TreeNode* ans = deepestLevel[0];
     cout<<deepestLevel.size();
     
