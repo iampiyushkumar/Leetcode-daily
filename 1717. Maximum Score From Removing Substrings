@@ -1,0 +1,34 @@
+class Solution {
+public:
+int score=0;
+void removekaro(string &s,int val,char prev,char forw){
+    string str="";
+    if(s.size()>0)
+     str+=s[0];
+
+     for(int i=1;i<s.size();i++){
+        if(!str.empty()){
+            if(str.back()==prev&&s[i]==forw)
+            {
+                score+=val;
+                str.pop_back();
+                continue;
+            }
+        }
+        str+=s[i];
+     }
+     s=str;
+}
+    int maximumGain(string s, int x, int y) {
+        if(x>y)
+        {
+            removekaro(s,x,'a','b');
+            removekaro(s,y,'b','a');
+        }
+       else{
+        removekaro(s,y,'b','a');
+        removekaro(s,x,'a','b');
+       }
+       return score;
+    }
+};
