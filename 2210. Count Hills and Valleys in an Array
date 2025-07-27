@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int countHillValley(vector<int>& nums) {
+        int cnt=0;
+        int n=nums.size();
+        for(int i=1;i<n;i++)
+        {
+            if(nums[i]==nums[i-1]) continue;
+            bool ishill=false;
+            bool isvalley=false;
+            bool lh=false,rh=false;
+            bool lv=false,rv=false;
+            for(int j=i-1;j>=0;j--)
+            {
+                if(nums[j]!=nums[i]){
+                    if(nums[j]<nums[i]) {
+                        lh=true;
+                        break;
+                    }
+                    else if(nums[j]>nums[i]){
+                        lv=true;
+                        break;
+                    }
+                    else
+                    break;
+                }
+            }
+            for(int j=i+1;j<n;j++)
+            {
+                 if(nums[j]!=nums[i]){
+                    if(nums[j]<nums[i]) {
+                        rh=true;
+                        break;
+                    }
+                    else if(nums[j]>nums[i])
+                    {
+                        rv=true;
+                        break;
+                    }
+                    else
+                    break;
+                }
+            }
+          cnt+=(lh&&rh)||(lv&&rv);
+        }
+        return cnt;
+    }
+};
