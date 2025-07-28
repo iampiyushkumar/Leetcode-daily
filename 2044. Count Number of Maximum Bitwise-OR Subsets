@@ -1,0 +1,24 @@
+class Solution {
+public:
+
+int find(vector<int>&nums,int idx,long long &orval,long long curr){
+   if(idx>=nums.size()){
+       return (curr==orval?1:0);
+   }
+    if(idx>=nums.size()) return 0;
+   
+     long long cnt=0;
+    cnt+=find(nums,idx+1,orval,curr|nums[idx]);
+    cnt+=find(nums,idx+1,orval,curr);
+    return cnt;
+}
+    int countMaxOrSubsets(vector<int>& nums) {
+         long long orval=0;
+         int n=nums.size();
+    for(auto x:nums){
+        orval|=x;
+    }
+ // vector<vector<long long>>dp(n+1,vector<long long>(orval,-1));
+    return  find(nums,0,orval,0);
+    }
+};
