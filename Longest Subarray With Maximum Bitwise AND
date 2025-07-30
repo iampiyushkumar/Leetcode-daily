@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums) {
+        int n=nums.size();
+    int maxi=0;
+    for(auto x:nums){
+        maxi=max(maxi,x);
+    }
+    int streak=1;
+    int len=0;
+    for(int i=1;i<n;i++){
+        if(nums[i]==nums[i-1]&&nums[i]==maxi) streak++;
+        else{
+            len=max(len,streak);
+            streak=1;
+        }
+    }
+    len=max(len,streak);
+    return len;
+    }
+};
