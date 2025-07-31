@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int subarrayBitwiseORs(vector<int>& arr) {
+        unordered_set<int>curr,res,aagla;
+        for(auto x:arr){
+            aagla.clear();
+            aagla.insert(x);
+            for(auto y:curr){
+                aagla.insert(x|y);
+            }
+            curr=aagla;
+            res.insert(curr.begin(),curr.end());
+
+        }
+        return res.size();
+    }
+};
