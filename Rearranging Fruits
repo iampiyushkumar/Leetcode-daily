@@ -1,0 +1,72 @@
+class Solution {
+public:
+bool check(unordered_map<int,int>&mp){
+    for(auto x:mp){
+        if(x.second%2==1) return false;
+    }
+    return true;
+}
+void find(vector<int>&ans,unordered_map<int,int>&mp,unordered_map<int,int>&mp1,unordered_map<int,int>&mp2)
+{
+    for(auto x:mp){
+        int num=x.first;
+        int cnt=x.second;
+        if(mp1.find(num)!=mp1.end()&&mp2.find(num)!=mp2.end())
+        {
+            if(mp1[num]==mp2[num]) continue;
+            if(mp1[num]>mp2[num]){
+                mp1[num]-=mp2[num];
+                ans.insert(ans.end(),mp1[num]/2,num);
+                
+            }
+            else if(mp2[num]>mp1[num]){
+                mp2[num]-=mp1[num];
+                ans.insert(ans.end(),mp2[num]/2,num);
+            }
+        }
+        else if(mp1.find(num)!=mp1.end()&&mp2.find(num)==mp2.end())
+        {
+           
+             ans.insert(ans.end(),mp1[num]/2,num);
+        }
+        else if(mp1.find(num)==mp1.end()&&mp2.find(num)!=mp2.end())
+        {
+            ans.insert(ans.end(),mp2[num]/2,num);
+        }
+
+        
+
+    }
+}
+    long long minCost(vector<int>& basket1, vector<int>& basket2) {
+      unordered_map<int,int>mp;
+      unordered_map<int,int>mp1;
+      unordered_map<int,int>mp2;
+      for(auto x:basket1){
+        mp[x]++;
+        mp1[x]++;
+      }
+      for(auto x:basket2){
+        mp[x]++;
+        mp2[x]++;
+      }
+      if(check(mp)==false) return -1;
+      vector<int>ans;
+     find(ans,mp,mp1,mp2);
+     sort(ans.begin(),ans.end());
+     long long cost=0;
+     int i=0;
+     int j=ans.size()-1;
+   int sabsebda = *min_element(basket1.begin(), basket1.end());
+sabsebda = min(sabsebda, *min_element(basket2.begin(), basket2.end()));
+
+while(i < j){
+    cost += min({ans[i], ans[j], 2 * sabsebda});
+    i++;
+    j--;
+}
+
+     return cost;
+        
+    }
+};
