@@ -1,0 +1,35 @@
+class Solution {
+public:
+int stepscal(int left,int right,int start){
+    int leftwala=abs(start-left)+(right-left);
+    int rightwala=abs(start-right)+(right-left);
+    return min(leftwala,rightwala);
+}
+    int maxTotalFruits(vector<vector<int>>& fruits, int startPos, int k) {
+        int n=fruits.size();
+        int jyadafal=0;
+        int right=0;
+        int left=0;
+        int collect=0;
+        for(right=0;right<n;right++){
+             collect+=fruits[right][1];
+             while(left<=right&&stepscal(fruits[left][0],fruits[right][0],startPos)>k)
+             {
+                collect-=fruits[left][1];
+                left++;
+             }
+             jyadafal=max(jyadafal,collect);
+        }
+        return jyadafal;
+    }
+};
+/*
+1      2.        4.  =>.  4
+                     3
+
+
+
+1.        start =3.          4 => min(5,4)
+
+start=1.          left=2.          right=6.   =>min(5,9)
+*/
