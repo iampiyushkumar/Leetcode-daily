@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+             int maxi=0;
+             unordered_map<int,int>mp;
+             int currsum=0;
+             int n=fruits.size();
+             int l=0;
+             for(int r=0;r<n;r++)
+             {
+                  currsum++;
+                  mp[fruits[r]]++;
+                  while(mp.size()>2)
+                  {
+                    mp[fruits[l]]--;
+                    if(mp[fruits[l]]==0)
+                     mp.erase(fruits[l]);
+                     currsum--;
+                    l++;
+
+                  }
+                  maxi=max(maxi,currsum);
+             }
+             return maxi;
+    }
+};
