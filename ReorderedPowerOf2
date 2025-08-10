@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool reorderedPowerOf2(int n) {
+        unordered_set<string>st={"1", "2", "4", "8", "16", "23", "46", "128", "256", "125","0124"};
+        for(int i=11;i<31;i++)
+        { 
+            int num=pow(2,i);
+            string temp=to_string(num);
+            sort(temp.begin(),temp.end());
+            st.insert(temp);
+           // cout<<temp;
+        }
+        string target=to_string(n);
+        sort(target.begin(),target.end());
+        if(st.find(target)!=st.end())
+        return true;
+        return false;
+    }
+};
