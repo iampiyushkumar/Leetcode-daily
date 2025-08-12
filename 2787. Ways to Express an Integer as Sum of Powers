@@ -1,0 +1,26 @@
+class Solution {
+public:
+
+int N;
+const int mod=1e9+7;
+long long find(int num,int x,int val,vector<vector<int>>&dp)
+{
+     if(val==N)
+     return 1;
+       int p = pow(num, x);
+     if(val+p>N)
+     return 0;
+     
+     if(dp[num][val]!=-1) return dp[num][val];
+   
+    return dp[num][val]=(find(num+1,x,val+p,dp)+find(num+1,x,val,dp))%mod;
+}
+    int numberOfWays(int n, int x) {
+        vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+        int num=1;
+        N=n;
+        int val=0;
+      return find(num,x,val,dp);
+        
+    }
+};
