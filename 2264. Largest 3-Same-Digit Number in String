@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string largestGoodInteger(string num) {
+        string maxi;
+        int l=num.size();
+        int cnt=1;
+        for(int i=1;i<num.size();i++){
+              if(num[i]==num[i-1]) cnt++;
+              else{
+                 if(cnt>=3)
+                 {
+                    maxi=max(maxi,num.substr(i-3,3));
+                 }
+                 cnt=1;
+              }
+        }
+        if(cnt>=3)
+                 {
+                    maxi=max(maxi,num.substr(l-3,3));
+                 }
+        return maxi;
+    }
+};
