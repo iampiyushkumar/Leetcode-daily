@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int areaOfMaxDiagonal(vector<vector<int>>& dimensions) {
+        int diagonallength=INT_MIN;
+        int area=0;
+        for(auto x:dimensions)
+        {
+            int len=x[0];
+            int breadth=x[1];
+            int val=((len*len)+(breadth*breadth));
+            cout<<val<<" "<<diagonallength<<endl;
+            if(val>diagonallength||(val==diagonallength&&len*breadth>area))
+              {
+                diagonallength=val;
+                area=len*breadth;
+              }
+        }
+        return area;
+    }
+};
