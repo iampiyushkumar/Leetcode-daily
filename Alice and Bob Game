@@ -1,0 +1,11 @@
+class Solution {
+public:
+    long long flowerGame(int n, int m) {
+        long long noddwale=(n+1)/2;
+        long long nevenwale=n/2;
+        long long moddwale=(m+1)/2;
+        long long mevenwale=m/2;
+        return noddwale*mevenwale+nevenwale*moddwale;
+
+    }
+};
