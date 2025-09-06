@@ -1,0 +1,22 @@
+class Solution {
+public:
+    long long minOperations(vector<vector<int>>& queries) {
+        long long result=0;
+       
+        for(auto x:queries)
+        {
+            int l=x[0];
+            int r=x[1];
+             long long sum=0;
+ long long operations=0;
+            for(int range=1;range<=r;range*=4)
+            {
+                long long ls=max(range,l);
+                long long rs=min(r,4*range-1);
+                sum+=max(0*1LL,(++operations)*(rs-ls+1));
+            }
+            result+=(sum+1)/2;
+        }
+        return result;
+    }
+};
